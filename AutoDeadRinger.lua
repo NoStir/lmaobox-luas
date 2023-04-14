@@ -4,7 +4,7 @@ local IN_ATTACK2 = 1 << 11
 local DELAY_TIME = 0.2
 
 local function onCreateMove(cmd)
-    local ActivateThreshold = 0.50
+    local ActivateThreshold = 0.50 --EDIT THIS NUMBER TO ADJUST AT WHICH HEALTH PERCENTAGE DEADRINGER IS ACTIVATED
 
     local healthRatio = me:GetHealth() / me:GetMaxHealth()
 
