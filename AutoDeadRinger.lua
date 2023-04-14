@@ -1,11 +1,12 @@
-local function onCreateMove( cmd )
+local me = entities.GetLocalPlayer()
 
-    local ActivateThreshold = 0.50 -- EDIT THIS NUMBER TO CHANGE AT WHAT HEALTH PERCENTAGE DEAD RINGER IS ACTIVATED
+local IN_ATTACK2 = 1 << 11
+local DELAY_TIME = 0.2
 
-    local me = entities.GetLocalPlayer()
-    local health = me:GetHealth()
-    local maxHealth = me:GetMaxHealth()
-    local healthRatio = (health / maxHealth)
+local function onCreateMove(cmd)
+    local ActivateThreshold = 0.50
+
+    local healthRatio = me:GetHealth() / me:GetMaxHealth()
 
     if skipHealthCheck then
         if os.clock() > skipHealthCheckTime then
@@ -17,7 +18,7 @@ local function onCreateMove( cmd )
 
     if healthRatio < ActivateThreshold then
         cmd.buttons = cmd.buttons | IN_ATTACK2
-        attack2timer = os.clock() + 0.2
+        attack2timer = os.clock() + DELAY_TIME
         skipHealthCheck = true
         skipHealthCheckTime = os.clock() + 5.0
     end
@@ -27,4 +28,4 @@ local function onCreateMove( cmd )
     end
 end
 
-callbacks.Register( "CreateMove", onCreateMove )
+callbacks.Register("CreateMove", onCreateMove)
